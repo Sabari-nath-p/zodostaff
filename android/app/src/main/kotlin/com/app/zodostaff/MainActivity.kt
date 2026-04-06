@@ -1,4 +1,4 @@
-package com.example.zodostaff
+package com.app.zodostaff
 
 import io.flutter.embedding.android.FlutterActivity
 

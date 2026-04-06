@@ -96,10 +96,9 @@ class AppointmentController extends GetxController {
     await ApiService.request(
       endpoint: "notifications",
       body: {
-        "user_ids":
-            appointments.map((data) {
-              return data.user!.id!;
-            }).toList(),
+        "user_ids": appointments.map((data) {
+          return data.user!.id!;
+        }).toList(),
         "title": title,
         "body": body,
         "type": ["in_app", "push"],

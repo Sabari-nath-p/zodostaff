@@ -14,10 +14,9 @@ import 'package:zodostaff/Utils/responseModel.dart';
 enum Api { POST, GET, PATCH, PUT, DELETE }
 
 class ApiService {
-  static String baseUrl =
-      (true)
-          ? "https://staging.zodoai.com/api/"
-          : "https://api.zodoai.com/api/";
+  static String baseUrl = (false)
+      ? "https://staging.zodoai.com/api/"
+      : "https://api.zodoai.com/api/";
 
   static Future<String?> getAuthToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();

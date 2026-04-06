@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,10 +94,12 @@ class AuthController extends GetxController {
           Get.offAll(() => HomeScreen(), transition: Transition.rightToLeft);
           print(data.data);
         },
+        onUnauthenticated: () {
+          isLoading.value = false;
+          Fluttertoast.showToast(msg: "Invalid credentials ");
+        },
         onError: (error) {
           isLoading.value = false;
-
-          print(error);
         },
         headers: {"app-type": "staff"},
       );
@@ -234,16 +237,15 @@ class CustomTextField extends StatelessWidget {
             hintText: hint,
             hintStyle: TextStyle(color: Color(0xFF9E9E9E), fontSize: 14.sp),
             prefixIcon: prefixIcon,
-            suffixIcon:
-                isPassword
-                    ? IconButton(
-                      icon: Icon(
-                        isObscured ? Icons.visibility_off : Icons.visibility,
-                        color: Color(0xFF9E9E9E),
-                      ),
-                      onPressed: onToggleVisibility,
-                    )
-                    : null,
+            suffixIcon: isPassword
+                ? IconButton(
+                    icon: Icon(
+                      isObscured ? Icons.visibility_off : Icons.visibility,
+                      color: Color(0xFF9E9E9E),
+                    ),
+                    onPressed: onToggleVisibility,
+                  )
+                : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: Color(0xFFE0E0E0)),
@@ -301,24 +303,23 @@ class CustomButton extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        child:
-            isLoading
-                ? SizedBox(
-                  height: 20.h,
-                  width: 20.w,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    strokeWidth: 2,
-                  ),
-                )
-                : Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: textColor ?? Colors.white,
-                  ),
+        child: isLoading
+            ? SizedBox(
+                height: 20.h,
+                width: 20.w,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 2,
                 ),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: textColor ?? Colors.white,
+                ),
+              ),
       ),
     );
   }
